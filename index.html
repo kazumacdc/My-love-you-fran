@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eu Amo Você</title>
+
+<style>
+body {
+    margin: 0;
+    overflow: hidden;
+    background: black;
+    font-family: Arial, sans-serif;
+    height: 100vh;
+}
+
+/* Botão central */
+.love-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: pink;
+    color: black;
+    border: none;
+    padding: 20px 35px;
+    font-size: 22px;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 0 20px pink;
+    animation: pulse 2s infinite;
+    z-index: 10;
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 10px pink; }
+    50% { box-shadow: 0 0 35px pink; }
+    100% { box-shadow: 0 0 10px pink; }
+}
+
+/* Popup */
+.popup {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    align-items: center;
+    justify-content: center;
+    z-index: 20;
+}
+
+.popup-content {
+    background: #111;
+    color: pink;
+    padding: 25px;
+    border-radius: 20px;
+    text-align: center;
+    max-width: 90%;
+    box-shadow: 0 0 25px pink;
+}
+
+/* Player */
+.player-box {
+    margin-top: 15px;
+    display: none;
+}
+
+.close {
+    margin-top: 15px;
+    background: pink;
+    color: black;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 30px;
+    cursor: pointer;
+}
+
+/* Corações */
+.heart {
+    position: absolute;
+    color: pink;
+    opacity: 0.7;
+    animation: fall linear infinite;
+    pointer-events: none;
+}
+
+@keyframes fall {
+    from { transform: translateY(-10vh); }
+    to { transform: translateY(110vh); }
+}
+</style>
+</head>
+
+<body>
+
+<button class="love-btn" onclick="openPopup()">EU AMO VOCÊ ♥️</button>
+
+<div class="popup" id="popup">
+    <div class="popup-content">
+        <h2>💗 Nosso Amor 💗</h2>
+
+        <p id="counter"></p>
+
+        <p>
+            OBRIGADO POR SER O AMOR DÁ MINHA VIDA,<br>
+            EU TE AMO MINHA PRINCESA FRAN
+        </p>
+
+        <button onclick="toggleMusic()" class="close">🎵 Música</button>
+
+        <div class="player-box" id="playerBox">
+            <iframe width="300" height="170"
+                src="https://youtu.be/xS_E7WzPjvE?si=sUgvTfAnlA3N3y43"
+                frameborder="0"
+                allow="autoplay; encrypted-media"
+                allowfullscreen>
+            </iframe>
+        </div>
+
+        <button class="close" onclick="closePopup()">Fechar</button>
+    </div>
+</div>
+
+<script>
+function openPopup() {
+    document.getElementById("popup").style.display = "flex";
+    updateCounter();
+}
+
+function closePopup() {
+    document.getElementById("popup").style.display = "none";
+}
+
+function toggleMusic() {
+    const box = document.getElementById("playerBox");
+    box.style.display = box.style.display === "block" ? "none" : "block";
+}
+
+function updateCounter() {
+    const startDate = new Date("2025-12-24T00:00:00");
+    const now = new Date();
+    const diff = now - startDate;
+
+    if (diff < 0) {
+        document.getElementById("counter").innerHTML =
+            "Nosso amor começa em 24/12/2025 💕";
+        return;
+    }
+
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+    const minutes = Math.floor((diff / (1000 * 60)) % 60);
+    const seconds = Math.floor((diff / 1000) % 60);
+
+    document.getElementById("counter").innerHTML =
+        `Estamos juntos há:<br>
+        <strong>${days}</strong> dias,
+        <strong>${hours}</strong> horas,
+        <strong>${minutes}</strong> minutos e
+        <strong>${seconds}</strong> segundos 💖`;
+}
+
+setInterval(updateCounter, 1000);
+
+function createHeart() {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerHTML = "♥";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize = Math.random() * 18 + 12 + "px";
+    heart.style.animationDuration = Math.random() * 8 + 8 + "s";
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 16000);
+}
+
+setInterval(createHeart, 600);
+</script>
+
+</body>
+</html>
